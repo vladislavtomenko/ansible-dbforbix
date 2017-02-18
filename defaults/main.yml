@@ -1,0 +1,24 @@
+---
+dbforbix_git_repo: "https://github.com/vagabondan/dbforbix.git"
+dbforbix_path: "/opt/dbforbix"
+dbforbix_git_ref: "HEAD"
+dbforbix_jar_file: "dbforbix_run_2.3-beta.jar"
+
+# config.properties parameters
+dbforbix_log_level: "All"
+dbforbix_log_file: "/var/log/db4bix.log"
+dbforbix_log_file_size: "10M"
+dbforbix_sleep: "30"
+dbforbix_update_config_timout: "120"
+dbforbix_max_thread_number: "100"
+dbforbix_pool_max_active: "10"
+dbforbix_pool_query_timout: "15"
+dbforbix_zabbix_servers:
+  -
+    name: "Zabbix1"
+    address: "localhost"
+    port: "10051"
+    proxy_name: "dbforbix"
+    db_list: 
+    - MYSQLDB1
+    - ORADB1

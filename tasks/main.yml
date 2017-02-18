@@ -1,0 +1,20 @@
+---
+- name: Clone dbforbix repo
+  git:
+    repo: "{{ dbforbix_git_repo }}"
+    dest: "{{ dbforbix_path }}"
+    version: "{{ dbforbix_git_ref }}"
+    depth: 1
+    force: yes
+  notify: restart dbforbix
+- name: Generate configuration file
+  template:
+    src="templates/config.properties.j2"
+    dest="{{ dbforbix_path }}/dist/db4bix/conf/config.properties"
+- name: Add systemd service
+  template:
+    src=templates/dbforbix.service.j2
+    dest=/usr/lib/systemd/system/dbforbix.service
+  notify: restart dbforbix
+- name: Enable dbforbix systemd service
+  systemd: state=started name=dbforbix enabled=yes

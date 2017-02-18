@@ -1,0 +1,13 @@
+[Unit]
+Description=dbforbix service
+After=syslog.target network.target
+
+
+[Service]
+Type=simple
+WorkingDirectory={{ dbforbix_path }}/dist/db4bix
+ExecStart=db4bix.sh
+User=root
+
+[Install]
+WantedBy=multi-user.target

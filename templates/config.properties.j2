@@ -1,0 +1,91 @@
+### General settings ###
+
+#
+## Log level (All|Debug|Info|Warning|Error)
+DB4bix.LogLevel={{ dbforbix_log_level }}
+#
+## Log file name
+DB4bix.LogFile={{ dbforbix_log_file }}
+#
+## Maximum log file size
+DB4bix.LogFileSize={{ dbforbix_log_file_size }}
+
+#pidFile
+#frequency of item's refresh
+DB4bix.Sleep={{ dbforbix_sleep }}
+
+#frequency of update config in seconds
+DB4bix.UpdateConfigTimeout={{ dbforbix_update_config_timout }}
+
+#MaxThreadNumber should be >= than the number of your databases
+DB4bix.MaxThreadNumber={{ dbforbix_max_thread_number }}
+
+#
+#### Configuration of Connection pool ###
+#
+## Maximum number of active connection inside pool
+Pool.MaxActive={{ dbforbix_pool_max_active }}
+#
+## Login Timeout
+Pool.QueryTimeOut={{ dbforbix_pool_query_timout }}
+
+#
+### Zabbix servers ###
+# A list of Zabbix servers, change the name after first dot to add more
+# Zabbix Server
+{% for server in dbforbix_zabbix_servers %}
+ZabbixServer.{{ server.name }}.Address={{ server.address }}
+{% endfor %}
+# Zabbix server port (trapper port)
+{% for server in dbforbix_zabbix_servers %}
+ZabbixServer.{{ server.name }}.Port={{ server.port }}
+{% endfor %}
+# Name of Zabbix proxy (you should create this name on your Zabbix Web Interface)
+# It will be used to get hosts and items configurations
+{% for server in dbforbix_zabbix_servers %}
+ZabbixServer.{{ server.name }}.ProxyName={{ server.proxy_name }}
+{% endfor %}
+# List of comma separated databases
+# This names also should be defined in your Template/Host macros {$DSN} in Zabbix Web Interface
+# See zabbix templates attached for further details
+{% for server in dbforbix_zabbix_servers %}
+ZabbixServer.{{ server.name }}.DBList={{ server.db_list | join(',') }}
+{% endfor %}
+##
+#
+
+
+
+
+
+### Database servers ###
+
+{% if dbforbix_mysql  is defined %} 
+###MySQL Server
+#define here your connection string for each database
+{% for db in dbforbix_mysql %}
+DB.{{ db.name }}.Url=jdbc:mysql://{{ db.address }}:{{ db.port | default("3306") }}/{{ db.instance }}
+DB.{{ db.name }}.Instance={{ db.instance }}
+DB.{{ db.name }}.User={{ db.user }}
+DB.{{ db.name }}.Password={{ db.password }}
+DB.{{ db.name }}.Type=mysql
+DB.{{ db.name }}.MaxActive={{ db.max_active | default("10") }}
+DB.{{ db.name }}.MaxWaitMillis={{ db.max_wait_millis | default("10000") }}
+DB.{{ db.name }}.MaxIdle={{ db.max_idle | default("1") }}
+{% endfor %}
+{% endif %}
+
+{% if dbforbix_oracle  is defined %} 
+###Oracle Server
+#define here your connection string for each database
+{% for db in dbforbix_oracle %}
+DB.{{ db.name }}.Type=oracle
+DB.{{ db.name }}.Instance={{ db.instance }}
+DB.{{ db.name }}.Url=jdbc:oracle:thin:@{{ db.address }}:{{ db.port | default("1521") }}:{{ db.instance }}
+DB.{{ db.name }}.User={{ db.user }}
+DB.{{ db.name }}.Password={{ db.password }}
+DB.{{ db.name }}.MaxActive={{ db.max_active | default("10") }}
+DB.{{ db.name }}.MaxWaitMillis={{ db.max_wait_millis | default("10000") }}
+DB.{{ db.name }}.MaxIdle={{ db.max_idle | default("1") }}
+{% endfor %}
+{% endif %}
