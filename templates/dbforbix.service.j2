@@ -5,8 +5,8 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-WorkingDirectory={{ dbforbix_path }}/dist/db4bix
-ExecStart=db4bix.sh
+WorkingDirectory={{ dbforbix_path }}/{{ dbforbix_base_path }}
+ExecStart=/usr/bin/java -jar {{ dbforbix_jar_file }} -b {{ dbforbix_path }}/{{ dbforbix_base_path }} -d -C -a start
 User=root
 
 [Install]

@@ -10,7 +10,8 @@
 - name: Generate configuration file
   template:
     src="templates/config.properties.j2"
-    dest="{{ dbforbix_path }}/dist/db4bix/conf/config.properties"
+    dest="{{ dbforbix_path }}/{{ dbforbix_base_path }}/conf/config.properties"
+  notify: restart dbforbix
 - name: Add systemd service
   template:
     src=templates/dbforbix.service.j2

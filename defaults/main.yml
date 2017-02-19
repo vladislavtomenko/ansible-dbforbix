@@ -1,6 +1,7 @@
 ---
 dbforbix_git_repo: "https://github.com/vagabondan/dbforbix.git"
 dbforbix_path: "/opt/dbforbix"
+dbforbix_base_path: "dist/db4bix"
 dbforbix_git_ref: "HEAD"
 dbforbix_jar_file: "dbforbix_run_2.3-beta.jar"
 
