@@ -38,7 +38,7 @@ ZabbixServer.{{ server.name }}.Address={{ server.address }}
 {% endfor %}
 # Zabbix server port (trapper port)
 {% for server in dbforbix_zabbix_servers %}
-ZabbixServer.{{ server.name }}.Port={{ server.port }}
+ZabbixServer.{{ server.name }}.Port={{ server.port | default("10051") }}
 {% endfor %}
 # Name of Zabbix proxy (you should create this name on your Zabbix Web Interface)
 # It will be used to get hosts and items configurations
