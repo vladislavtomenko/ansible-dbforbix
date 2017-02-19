@@ -1,4 +1,4 @@
-Role Name
+dbforbix
 =========
 
 This ansible role is to install dbforbix zabbix proxy. It monitors databases such as mysql and oracle at the moment. The original project link: https://github.com/vagabondan/DBforBIX
